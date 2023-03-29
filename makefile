@@ -16,10 +16,10 @@ OBJ = $(patsubst $(SRC_FOLDER)%.cpp, $(OBJ_FOLDER)%.o, $(SRC))
 
 # compile
 $(OBJ_FOLDER)%.o: $(SRC_FOLDER)%.cpp
-	$(CC) $(CXXFLAGS) -c $< -o $@ -I$(INCLUDE_FOLDER)
+	$(CC) $(CXXFLAGS) -pg -c $< -o $@ -I$(INCLUDE_FOLDER)
 
 all: $(OBJ)
-	$(CC) $(CXXFLAGS) -o $(BIN_FOLDER)$(TARGET) $(OBJ) 
+	$(CC) $(CXXFLAGS) -pg -o $(BIN_FOLDER)$(TARGET) $(OBJ) 
 
 clean:
 	@rm -rf $(OBJ_FOLDER)* $(BIN_FOLDER)*
