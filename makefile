@@ -58,16 +58,16 @@ run:  $(EXE)
 	$(EXE) -b 50
 
 $(BIN)/run: $(OBJS)
-	$(CC) -o $(BIN)/run $(OBJS) $(LIBS)
+	$(CC) -pg -o $(BIN)/run $(OBJS) $(LIBS)
 
 $(OBJ)/main.o: $(HDRS) $(SRC)/main.cpp
-	$(CC) $(CFLAGS) -o $(OBJ)/main.o $(SRC)/main.cpp 
+	$(CC) $(CFLAGS) -pg -o $(OBJ)/main.o $(SRC)/main.cpp 
 
 $(OBJ)/fatorial.o: $(HDRS) $(SRC)/fatorial.cpp
-	$(CC) $(CFLAGS) -o $(OBJ)/fatorial.o $(SRC)/fatorial.cpp 
+	$(CC) $(CFLAGS) -pg -o $(OBJ)/fatorial.o $(SRC)/fatorial.cpp 
 
 $(OBJ)/fibonacci.o: $(HDRS) $(SRC)/fibonacci.cpp
-	$(CC) $(CFLAGS) -o $(OBJ)/fibonacci.o $(SRC)/fibonacci.cpp 
+	$(CC) $(CFLAGS) -pg -o $(OBJ)/fibonacci.o $(SRC)/fibonacci.cpp 
 
 clean:
 	rm -f $(EXE) $(OBJS) gmon.out
