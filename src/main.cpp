@@ -1,21 +1,20 @@
 #include "fatorial.h"
 #include "fibonacci.h"
+#include "msgassert.h"
 
 using namespace std;
 
-int main(){
-    int fat;
-    int fib;
+char caso;
 
-    cout << "FATORIAL DE: ";
-    cin >> fat;
-    cout << endl << "RECURSIVO: " << Factorial_recursive(fat);
-    cout << endl << "ITERATIVO: " << Factorial_iterative(fat);
+void parse_args(int argc, char const *argv[])
+{
+  // passa o arquivo a ser lido como argumento da linha de comando
+  erroAssert(argv[1], "Sem caso selecionado");
+  caso = char(argv[1]);
+}
 
-    cout << "\n\n";
-
-    cout << "FIBONACCI DE: ";
-    cin >> fib;
-    cout << endl << "RECURSIVO: " << Fibonacci_recursive(fib);
-    cout << endl << "ITERATIVO: " << Fibonacci_iterative(fib) << endl;
+void descricao() {
+    cout << "OPÇOES:" << endl;
+    cout << "\t-t: fatorial" << endl;
+    cout << "\t-b: fibonacci" << endl;
 }
