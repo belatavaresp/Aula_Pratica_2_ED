@@ -10,7 +10,7 @@ CFLAGS = -Wall -c -I$(INC)
 
 EXE = $(BIN)/run
 
-all:  $(EXE)
+run:  $(EXE)
 	$(EXE) -t 1
 	$(EXE) -t 2
 	$(EXE) -t 3
