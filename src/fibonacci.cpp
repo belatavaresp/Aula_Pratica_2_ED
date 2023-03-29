@@ -1,5 +1,11 @@
 #include "fibonacci.h"
+#include <math.h>
+
 int Fibonacci_recursive(int n){
+    for(int i = 1 ; i < 1000000 ; i++){
+        sin(i);
+    }
+
     if (n < 3)
         return 1;
     else

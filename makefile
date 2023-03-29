@@ -31,6 +31,8 @@ all:  $(EXE)
 	$(EXE) -t 18
 	$(EXE) -t 19
 	$(EXE) -t 20
+	$(EXE) -t 30
+	$(EXE) -t 50
 
 	$(EXE) -b 1
 	$(EXE) -b 2
@@ -51,19 +53,21 @@ all:  $(EXE)
 	$(EXE) -b 17
 	$(EXE) -b 18
 	$(EXE) -b 19
+	$(EXE) -b 20
 	$(EXE) -b 30
+	$(EXE) -b 50
 
 $(BIN)/run: $(OBJS)
-	$(CC) -pg -o $(BIN)/run $(OBJS) $(LIBS)
+	$(CC) -o $(BIN)/run $(OBJS) $(LIBS)
 
 $(OBJ)/main.o: $(HDRS) $(SRC)/main.cpp
-	$(CC) $(CFLAGS) -pg -o $(OBJ)/main.o $(SRC)/main.cpp 
+	$(CC) $(CFLAGS) -o $(OBJ)/main.o $(SRC)/main.cpp 
 
 $(OBJ)/fatorial.o: $(HDRS) $(SRC)/fatorial.cpp
-	$(CC) $(CFLAGS) -pg -o $(OBJ)/fatorial.o $(SRC)/fatorial.cpp 
+	$(CC) $(CFLAGS) -o $(OBJ)/fatorial.o $(SRC)/fatorial.cpp 
 
 $(OBJ)/fibonacci.o: $(HDRS) $(SRC)/fibonacci.cpp
-	$(CC) $(CFLAGS) -pg -o $(OBJ)/fibonacci.o $(SRC)/fibonacci.cpp 
+	$(CC) $(CFLAGS) -o $(OBJ)/fibonacci.o $(SRC)/fibonacci.cpp 
 
 clean:
 	rm -f $(EXE) $(OBJS) gmon.out

@@ -6,6 +6,8 @@
 #include "fatorial.h"
 #include "fibonacci.h"
 #include "msgassert.h"
+#include <sys/time.h>
+#include <sys/resource.h>
 
 using namespace std;
 
@@ -76,37 +78,77 @@ int main(int argc, char ** argv)
 // Entrada: argc e argv
 // Saida: depende da operacao escolhida
 {
-  clock_t time_req;
+  clock_t time_req; //funcao para medir tempo de relógio
   opt_tipo opt;
   // avaliar linha de comando
   parse_args(argc,argv,&opt);
 
+  //medicoes do tempo de sistema e de usuário
+  struct rusage usage;
+    struct timeval start_user, end_user, start_system, end_system;
+
+    // 
+    getrusage(RUSAGE_SELF, &usage);
+    start_user = usage.ru_utime;
+    start_system = usage.ru_stime;
+
+  float utime, stime;
   // execucao dependente da operacao escolhida
   switch (opt.opescolhida){
     case OPFATORIAL:
+         //inicia a contagem do relógio
          time_req = clock();
          cout << "FATORIAL\n";
+         cout << "\tIterativo: " << Factorial_iterative(opt.numero) << endl; 
+         //calcula a diferenca de tempo (tempo gasto pra executar)
+         time_req = clock() - time_req;
+         //imprime o tempo gasto em milisegundos
+         cout << "\t\tTempo de relógio gasto -> " << 
+         ((float)time_req/CLOCKS_PER_SEC) * 1000 << " milisseconds" << endl;
+         //mesma coisa pro recursivo
          cout << "\tRecursivo: " << Factorial_recursive(opt.numero) << endl;
          time_req = clock() - time_req;
          cout << "\t\tTempo de relógio gasto -> " << 
          ((float)time_req/CLOCKS_PER_SEC) * 1000 << " milisseconds" << endl;
          time_req = clock();
-         cout << "\tIterativo: " << Factorial_iterative(opt.numero) << endl; 
-         time_req = clock() - time_req;
-         cout << "\t\tTempo de relógio gasto -> " << 
-         ((float)time_req/CLOCKS_PER_SEC) * 1000 << " milisseconds" << endl;
+
+        // finaliza a contagem do tempo de sistema e de usuário
+        getrusage(RUSAGE_SELF, &usage);
+        end_user = usage.ru_utime;
+        end_system = usage.ru_stime;
+
+        // tv_sec: segundos; tv_usec: microsegundos
+        // ru_utime: tempo total de usuário pra executar,
+        // expressado em segundos + microsegundos
+        utime = (end_user.tv_sec - start_user.tv_sec) + 1e-6 * (end_user.tv_usec - start_user.tv_usec);
+        stime = (end_system.tv_sec - start_system.tv_sec) + 1e-6 * (end_system.tv_usec - start_system.tv_usec);
+        cout << "\t\tTempo de sistema -> " << stime << endl;
+        cout << "\t\tTempo de usuário -> " << utime << endl;
+
 	 break;
+    //repete o processo para a função de fibonacci
     case OPFIBONACCI:
          time_req = clock();
          cout << "FIBONACCI\n";
+         cout << "\tIterativo: " << Fibonacci_iterative(opt.numero) << endl; 
+         time_req = clock() - time_req;
+         cout << "\t\tTempo de relógio gasto -> " << 
+         ((float)time_req/CLOCKS_PER_SEC) * 1000 << " milisseconds" << endl;
          cout << "\tRecursivo: " << Fibonacci_recursive(opt.numero) << endl; 
          time_req = clock() - time_req;
          cout << "\t\tTempo de relógio gasto -> " << 
          ((float)time_req/CLOCKS_PER_SEC) * 1000 << " milisseconds" << endl;
          time_req = clock();
-         cout << "\tIterativo: " << Fibonacci_iterative(opt.numero) << endl; 
-         cout << "\t\tTempo de relógio gasto -> " << 
-         ((float)time_req/CLOCKS_PER_SEC) * 1000 << " milisseconds" << endl;
+
+
+        getrusage(RUSAGE_SELF, &usage);
+        end_user = usage.ru_utime;
+        end_system = usage.ru_stime;
+
+        utime = (end_user.tv_sec - start_user.tv_sec) + 1e-6 * (end_user.tv_usec - start_user.tv_usec);
+        stime = (end_system.tv_sec - start_system.tv_sec) + 1e-6 * (end_system.tv_usec - start_system.tv_usec);
+        cout << "\t\tTempo de sistema -> " << stime << endl;
+        cout << "\t\tTempo de usuário -> " << utime << endl;
 	 break;
    default:
          // nao deve ser executado, pois ha um erroAssert em parse_args
