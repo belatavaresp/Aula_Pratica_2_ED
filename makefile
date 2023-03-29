@@ -31,8 +31,6 @@ run:  $(EXE)
 	$(EXE) -t 18
 	$(EXE) -t 19
 	$(EXE) -t 20
-	$(EXE) -t 30
-	$(EXE) -t 50
 
 	$(EXE) -b 1
 	$(EXE) -b 2
@@ -54,8 +52,6 @@ run:  $(EXE)
 	$(EXE) -b 18
 	$(EXE) -b 19
 	$(EXE) -b 20
-	$(EXE) -b 30
-	$(EXE) -b 50
 
 $(BIN)/run: $(OBJS)
 	$(CC) -pg -o $(BIN)/run $(OBJS) $(LIBS)
