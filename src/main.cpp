@@ -105,6 +105,17 @@ int main(int argc, char ** argv)
          //imprime o tempo gasto em milisegundos
          cout << "\t\tTempo de relógio gasto -> " << 
          ((float)time_req/CLOCKS_PER_SEC) * 1000 << " milisseconds" << endl;
+
+        //imprime o tempo de usuario e de sistema
+        utime = (end_user.tv_sec - start_user.tv_sec) + 1e-6 * (end_user.tv_usec - start_user.tv_usec);
+        stime = (end_system.tv_sec - start_system.tv_sec) + 1e-6 * (end_system.tv_usec - start_system.tv_usec);
+        cout << "\t\tTempo de sistema -> " << stime << endl;
+        cout << "\t\tTempo de usuário -> " << utime << endl;
+
+
+        getrusage(RUSAGE_SELF, &usage);
+        start_user = usage.ru_utime;
+        start_system = usage.ru_stime;
          //mesma coisa pro recursivo
          cout << "\tRecursivo: " << Factorial_recursive(opt.numero) << endl;
          time_req = clock() - time_req;
@@ -112,14 +123,8 @@ int main(int argc, char ** argv)
          ((float)time_req/CLOCKS_PER_SEC) * 1000 << " milisseconds" << endl;
          time_req = clock();
 
-        // finaliza a contagem do tempo de sistema e de usuário
-        getrusage(RUSAGE_SELF, &usage);
-        end_user = usage.ru_utime;
-        end_system = usage.ru_stime;
 
-        // tv_sec: segundos; tv_usec: microsegundos
-        // ru_utime: tempo total de usuário pra executar,
-        // expressado em segundos + microsegundos
+        //imprime o tempo de usuario e de sistema
         utime = (end_user.tv_sec - start_user.tv_sec) + 1e-6 * (end_user.tv_usec - start_user.tv_usec);
         stime = (end_system.tv_sec - start_system.tv_sec) + 1e-6 * (end_system.tv_usec - start_system.tv_usec);
         cout << "\t\tTempo de sistema -> " << stime << endl;
@@ -134,16 +139,21 @@ int main(int argc, char ** argv)
          time_req = clock() - time_req;
          cout << "\t\tTempo de relógio gasto -> " << 
          ((float)time_req/CLOCKS_PER_SEC) * 1000 << " milisseconds" << endl;
-         cout << "\tRecursivo: " << Fibonacci_recursive(opt.numero) << endl; 
-         time_req = clock() - time_req;
-         cout << "\t\tTempo de relógio gasto -> " << 
-         ((float)time_req/CLOCKS_PER_SEC) * 1000 << " milisseconds" << endl;
-         time_req = clock();
 
+        utime = (end_user.tv_sec - start_user.tv_sec) + 1e-6 * (end_user.tv_usec - start_user.tv_usec);
+        stime = (end_system.tv_sec - start_system.tv_sec) + 1e-6 * (end_system.tv_usec - start_system.tv_usec);
+        cout << "\t\tTempo de sistema -> " << stime << endl;
+        cout << "\t\tTempo de usuário -> " << utime << endl;
 
         getrusage(RUSAGE_SELF, &usage);
         end_user = usage.ru_utime;
         end_system = usage.ru_stime;
+
+         cout << "\tRecursivo: " << Fibonacci_recursive(opt.numero) << endl; 
+         time_req = clock() - time_req;
+         cout << "\t\tTempo de relógio gasto -> " << 
+         ((float)time_req/CLOCKS_PER_SEC) * 1000 << " milisseconds" << endl;
+          time_req = clock();
 
         utime = (end_user.tv_sec - start_user.tv_sec) + 1e-6 * (end_user.tv_usec - start_user.tv_usec);
         stime = (end_system.tv_sec - start_system.tv_sec) + 1e-6 * (end_system.tv_usec - start_system.tv_usec);
